@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<meta name="author" content="JasonLau.biz" />
+<!-- /*
+ 
+    SWF-Capabilities
+    ==================================================================
+    ©2011 JasonLau.biz
+    ==================================================================
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*/ -->
+
+	<title>SWF-Capabilities Demo</title>
+    <!-- BEGIN SWF-Capabilities -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        var params = {
+            allowscriptaccess: 'local',
+            swliveconnect: 'true',
+            wmode: 'transparent'
+        };
+        var attributes = {
+            id: 'capabilities'
+        };
+        swfobject.embedSWF('swf_capabilities.swf?version=' + Math.floor(Math.random()*1000) + '', 'container-div', '1', '1', '10', 'http://swfobject.googlecode.com/svn/trunk/swfobject/expressInstall.swf', null, params, attributes);
+        
+        $("#cookies-accepted").click(function(){
+            if(capabilities.cookies_accepted()){
+                alert("Cookies Accepted!");
+            } else {
+                alert("Cookies Not Accepted! Reinstall Flash or check your Flash settings!");
+            }
+        });
+        
+        $("#server-string").click(function(){
+            var ss = capabilities.get_capabilities(true);
+            if(ss){
+                alert(ss);
+            } else {
+                alert("Failed to fetch serverString!");
+            }
+        });
+        
+        $("#system-capabilities").click(function(){
+            var cp = capabilities.get_capabilities();
+            if(cp){
+                var c_data = '';
+                $.each(cp, function(key, value) {
+                    c_data += key + '=' + value + '&';
+                });
+                alert(c_data);
+            } else {
+                alert("Failed to fetch system capabilities!");
+            }
+        });
+        
+        $("#set-cookie").click(function(){
+            var sc = capabilities.set_cookie($("#cookie-name").val(),$("#cookie-value").val());
+            if(sc){
+                var c_data = capabilities.get_cookie($("#cookie-name").val());
+                alert("Cookie successfully set and read back. Here is the fetched result - Cookie Name: " + $("#cookie-name").val() + " Cookie Value: " + c_data);
+            } else {
+                alert("Failed to set cookie!");
+            }
+        });
+        
+        $("#unset-cookie").click(function(){
+            var sc = capabilities.unset_cookie($("#cookie-name").val());
+            if(sc){
+                alert("Cookie successfully deleted! ");
+            } else {
+                alert("Failed to delete cookie or no cookie existed!");
+            }
+        });
+        
+        $("#set-key").click(function(){
+            var k = capabilities.set_key(150,"abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
+            //alert(k);
+            if(k){
+                var k_data = capabilities.get_key();
+                alert("Random key successfully set and read back. Here is the fetched result - Cookie Name: " + k + " Cookie Value: " + k_data);
+            } else {
+                alert("Failed to set cookie!");
+            }
+        });
+        
+        $("#unset-key").click(function(){
+            var k = capabilities.unset_key();
+            if(k){
+                alert("Cookie successfully deleted! ");
+            } else {
+                alert("Failed to delete cookie or no cookie existed!");
+            }
+        });
+        
+    });
+    </script>
+    <!-- END SWF-Capabilities -->
+</head>
+
+<body>
+
+<h2>SWF-Capabilities Demo</h2>
+<p>This page demonstrates SWF-Capabilities' API functions in use.</p>
+<fieldset>
+<legend>Cookie Test</legend>
+<input type="button" value="Cookies Accepted?" id="cookies-accepted" />
+</fieldset>
+<br />
+<fieldset>
+<legend>System Capabilities</legend>
+<input type="button" value="Get Server String" id="server-string" /><br />
+<input type="button" value="Get System Capabilities" id="system-capabilities" />
+</fieldset>
+<br />
+<fieldset>
+<legend>Set Cookie</legend>
+<label>Cookie Name</label> <input type="text" value="test<?php echo rand(100,900); ?>" id="cookie-name" readonly="readonly" disabled="disabled" /> 
+<label>Cookie Value</label> <input type="text" value="<?php echo rand(1000,9000); ?>" id="cookie-value" readonly="readonly" disabled="disabled" />
+<input type="button" value="Set Cookie" id="set-cookie" /><br /><br />
+<input type="button" value="Delete Cookie" id="unset-cookie" />
+</fieldset>
+<br />
+<fieldset>
+<legend>Set Random Key</legend>
+<input type="button" value="Set Key" id="set-key" /><br />
+<input type="button" value="Delete Key" id="unset-key" />
+</fieldset>
+<!-- BEGIN SWF-Capabilities -->
+<div id="container-div"></div>
+<!-- END SWF-Capabilities -->
+</body>
+</html>
