@@ -92,7 +92,6 @@
         
         $("#set-key").click(function(){
             var k = capabilities.set_key(150,"abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
-            //alert(k);
             if(k){
                 var k_data = capabilities.get_key();
                 alert("Random key successfully set and read back. Here is the fetched result - Cookie Name: " + k + " Cookie Value: " + k_data);
