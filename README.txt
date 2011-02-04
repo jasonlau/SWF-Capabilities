@@ -1,4 +1,4 @@
-==================================================================
+﻿==================================================================
 SWF Capabilities ©2011 JasonLau.biz
 Contact: http://send.amailto.me/jason
 ==================================================================
@@ -24,7 +24,7 @@ SWF Capabilities is intended to be an aid for webmasters.
 SWF Capabilities provides a JavaScript API for Local 
 Flash SharedObject (Flash cookies) handling and various other helpful
 functions. Better than browser cookies, this program provides a means 
-for utilizing Flash's persistant local data storage with JavaScript
+for utilizing Flash's persistent local data storage with JavaScript
 and Flash cookies. 
 
 SWF Capabilities can grab the user's "System capabilities" object which 
