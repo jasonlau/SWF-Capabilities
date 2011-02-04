@@ -31,6 +31,7 @@
     <script type="text/javascript" src="http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js"></script>
     <script type="text/javascript">
     $(function(){
+        
         var params = {
             allowscriptaccess: 'local',
             swliveconnect: 'true',
@@ -40,6 +41,13 @@
             id: 'capabilities'
         };
         swfobject.embedSWF('swf_capabilities.swf?version=' + Math.floor(Math.random()*1000) + '', 'container-div', '1', '1', '10', 'http://swfobject.googlecode.com/svn/trunk/swfobject/expressInstall.swf', null, params, attributes);
+        
+        var cn = "test" + Math.floor(Math.random()*1000),
+        cv = Math.floor(Math.random()*10000);
+        $("#cookie-name").val(cn);
+        $("#cookie-value").val(cv);
+        $(".cookie-name").html(cn);
+        $(".cookie-value").html(cv);
         
         $("#cookies-accepted").click(function(){
             if(capabilities.cookies_accepted()){
@@ -75,9 +83,18 @@
             var sc = capabilities.set_cookie($("#cookie-name").val(),$("#cookie-value").val());
             if(sc){
                 var c_data = capabilities.get_cookie($("#cookie-name").val());
-                alert("Cookie successfully set and read back. Here is the fetched result - Cookie Name: " + $("#cookie-name").val() + " Cookie Value: " + c_data);
+                alert("Cookie successfully set. Cookie Name: " + $("#cookie-name").val());
             } else {
                 alert("Failed to set cookie!");
+            }
+        });
+        
+        $("#get-cookie").click(function(){
+            var sc = capabilities.get_cookie($("#cookie-name").val());
+            if(sc){
+                alert("Cookie successfully fetched! Cookie Name: " + $("#cookie-name").val() + " Cookie Value: " + sc);
+            } else {
+                alert("Failed to fetch cookie!");
             }
         });
         
@@ -94,9 +111,18 @@
             var k = capabilities.set_key(150,"abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789");
             if(k){
                 var k_data = capabilities.get_key();
-                alert("Random key successfully set and read back. Here is the fetched result - Cookie Name: " + k + " Cookie Value: " + k_data);
+                alert("Random key successfully set. Cookie Name: " + k);
             } else {
                 alert("Failed to set cookie!");
+            }
+        });
+        
+        $("#get-key").click(function(){
+            var k = capabilities.get_key();
+            if(k){
+                alert("Random key successfully fetched. Cookie Value: " + k);
+            } else {
+                alert("Failed to fetch random key!");
             }
         });
         
@@ -114,46 +140,109 @@
     <!-- END SWF-Capabilities -->
     <style type="text/css">
     <!--
+    #demo{
+        max-width: 780px;
+        margin: 20px auto 20px auto;
+    }
     fieldset{
-        padding: 18px;
+        
+    }
+    .demo-input{
+       margin: 20px; 
     }
     legend{
         font-weight: bold;
+        font-variant: small-caps;
+        font-size: 1.2em;
+    }
+    label{
+        font-weight: bold;
+    }
+    .red{
+       color: red; 
+    }
+    .left{
+        line-height: 100px;
+      float: left;
+      width: 400px;
+      text-align: left;  
+    }
+    .right{
+      float: right; 
+      width: 380px;
+      text-align: right;
     }
     -->
     </style>
 </head>
 
 <body>
-
+<div id="demo">
 <h2>SWF-Capabilities Demo</h2>
-<p>This page demonstrates SWF-Capabilities' API functions in use.</p>
+<hr />
+<p>SWF-Capabilities is a small Flash application which enables webmasters through its Javascript API to utilize Flash's Local SharedObject (Flash Cookies).  This webpage demonstrates these JavaScript API functions in use. You can use this webpage as a guide to help you understand how SWF-Capabilities works.</p>
+
+<fieldset>
+<legend>Important</legend>
+<div class="demo-input">
+<p>The object name, <strong><em>capabilities</em></strong>, is created automatically by SWF-Capabilities. There is no need for you to create this object.</p>
+<p>Example: <em><strong class="red">capabilities</strong>.cookies_accepted()</em></p>
+</div>
+</fieldset>
+<br />
 <fieldset>
 <legend>Cookie Test</legend>
+<div class="demo-input">
+<p><em>capabilities.cookies_accepted()</em> detects if a user is accepting Flash cookies. Press the button below to test this function on your system.</p>
 <input type="button" value="Cookies Accepted?" id="cookies-accepted" />
+</div>
 </fieldset>
 <br />
 <fieldset>
 <legend>System Capabilities</legend>
-<input type="button" value="Get Server String" id="server-string" /><br />
+<div class="demo-input">
+<p><em>capabilities.get_capabilities()</em> fetches the user's system capabilities or serverString. Press the buttons below to test this function on your system.</p>
+<em>capabilities.get_capabilities(<strong class="red">true</strong>)</em><br />
+<input type="button" value="Get Server String" id="server-string" /><br /><br />
+<em>capabilities.get_capabilities(<strong class="red">false</strong>)</em><br />
 <input type="button" value="Get System Capabilities" id="system-capabilities" />
+</div>
 </fieldset>
 <br />
 <fieldset>
 <legend>Set Cookie</legend>
-<label>Cookie Name</label> <input type="text" value="test<?php echo rand(100,900); ?>" id="cookie-name" readonly="readonly" disabled="disabled" /> 
-<label>Cookie Value</label> <input type="text" value="<?php echo rand(1000,9000); ?>" id="cookie-value" readonly="readonly" disabled="disabled" />
+<div class="demo-input">
+<p><em>capabilities.set_cookie()</em>, <em>capabilities.get_cookie()</em>, and <em>capabilities.unset_cookie()</em> allow you to manage custom Flash cookies which persist until either you change them, or until the user deletes them. Press the buttons below to test this function on your system. The <em>Cookie Name</em> and <em>Cookie Value</em> below are fixed for this demo only. Normally, these values are customizable.</p>
+<label>Cookie Name</label> <input type="text" value="" id="cookie-name" readonly="readonly" disabled="disabled" /><br /> 
+<label>Cookie Value</label> <input type="text" value="" id="cookie-value" readonly="readonly" disabled="disabled" /><br /><br />
+<em>capabilities.set_cookie('<strong><span class="cookie-name red"></span></strong>', '<strong><span class="cookie-value red"></span></strong>')</em><br />
 <input type="button" value="Set Cookie" id="set-cookie" /><br /><br />
+<em>capabilities.get_cookie('<strong><span class="cookie-name red"></span></strong>')</em><br />
+<input type="button" value="Get Cookie" id="get-cookie" /><br /><br /><br />
+<em>capabilities.unset_cookie('<strong><span class="cookie-name red"></span></strong>')</em><br />
 <input type="button" value="Delete Cookie" id="unset-cookie" />
+</div>
 </fieldset>
 <br />
 <fieldset>
 <legend>Set Random Key</legend>
-<input type="button" value="Set Key" id="set-key" /><br />
+<div class="demo-input">
+<p><em>capabilities.set_key()</em>, <em>capabilities.get_key()</em>, and <em>capabilities.unset_key()</em> allow you to generate, fetch, or delete a randomized Flash cookie (<em>key</em>) which can then be utilized in situations such as form submission validation, user id, tracking, etc.. The key cookie will have a randomized name and value. The value can be a custom length and can consist of any characters you select. You decide how this feature can be helpful to you. Press the buttons below to test this function on your system.</p>
+<em>capabilities.set_key(<strong class="red">150</strong>,"<strong class="red">abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789</strong>")</em><br />
+<input type="button" value="Set Key" id="set-key" /><br /><br />
+<em>capabilities.get_key()</em><br />
+<input type="button" value="Get Key" id="get-key" /><br /><br />
+<em>capabilities.unset_key()</em><br />
 <input type="button" value="Delete Key" id="unset-key" />
+</div>
 </fieldset>
+
 <!-- BEGIN SWF-Capabilities -->
 <div id="container-div"></div>
 <!-- END SWF-Capabilities -->
+
+<div class="left">SWF-Capabilities &copy;2011 <a href="http://jasonlau.biz">Jason Lau</a></div>
+<div class="right"><a href="http://www.gnu.org/licenses/gpl.html" target="_blank"><img src="http://www.gnu.org/graphics/gplv3-127x51.png" alt="GNU/GPL" border="0" /></a> <a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License</a></div>
+</div>
 </body>
 </html>
