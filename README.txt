@@ -72,18 +72,21 @@ Below are all of the methods currently available.
 capabilities.cookies_accepted()
 - Returns true if Flash cookies are accepted. Use this first.
 
-capabilities.get_capabilities(serverString:Boolean)
-- This will return the user's system capabilities object.
-If serverString is set to true, the user's server string will
-be returned in string form. Otherwise, leave serverString empty.
+capabilities.get_capabilities(objectKey:String Or stringForm:Boolean)
+- This will return the user's entire system capabilities object or 
+individual keys.
+If stringForm is set to true, the user's system capabilities will
+be returned in string form. Otherwise, the system capabilities object
+will be returned.
 
-capabilities.is_match(serverString:String)
-- Returns true if serverString matches the user's real serverString.
-The idea is for you to store the server string in a cookie and compare
-the cookie value to the actual value later. If it's a match, then you
-know the cookie belongs to the user. This is not good for long-term
+capabilities.is_match(sys_capabilities:Object)
+- Returns true if sys_capabilities matches the user's real system 
+capabilities object.
+The idea is for you to store the system capabilities object in a cookie
+and compare the cookie value to the actual value later. If it's a match, 
+then you know the cookie belongs to the user. This is not good for long-term
 use though. The user could make changes to the computer which would
-affect the serverString value.
+affect the system capabilities object.
 
 capabilities.set_cookie(name:String, value)
 - Sets a local SharedObject using your name and value.

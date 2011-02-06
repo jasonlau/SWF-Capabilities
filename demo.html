@@ -79,6 +79,15 @@
             }
         });
         
+        $("#is-match").click(function(){
+            var match = capabilities.is_match($(this).attr('rel'));
+            if(match){
+                alert("We have a match!");
+            } else {
+                alert("Not a match!");
+            }
+        });
+        
         $("#set-cookie").click(function(){
             var sc = capabilities.set_cookie($("#cookie-name").val(),$("#cookie-value").val());
             if(sc){
@@ -205,7 +214,9 @@
 <em>capabilities.get_capabilities(<strong class="red">true</strong>)</em><br />
 <input type="button" value="Get Server String" id="server-string" /><br /><br />
 <em>capabilities.get_capabilities(<strong class="red">false</strong>)</em><br />
-<input type="button" value="Get System Capabilities" id="system-capabilities" />
+<input type="button" value="Get System Capabilities" id="system-capabilities" /><br /><br />
+<em>capabilities.is_match('<strong class="red">A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f<br />&SB=f&DEB=f&V=WIN%2010%2C0%2C45%2C2&M=Adobe%20Windows&R=1440x900&DP=72<br />&COL=color&AR=1.0&OS=Windows%20Vista&ARCH=x86&L=en&IME=t&PR32=t&PR64=f<br />&PT=ActiveX&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1</strong>')</em><br />
+<input type="button" value="Is Match?" id="is-match" rel="A=t&SA=t&SV=t&EV=t&MP3=t&AE=t&VE=t&ACC=t&PR=t&SP=f&SB=f&DEB=f&V=WIN%2010%2C0%2C45%2C2&M=Adobe%20Windows&R=1440x900&DP=72&COL=color&AR=1.0&OS=Windows%20Vista&ARCH=x86&L=en&IME=t&PR32=t&PR64=f&PT=ActiveX&AVD=f&LFD=f&WD=f&TLS=t&ML=5.1" />
 </div>
 </fieldset>
 <br />
