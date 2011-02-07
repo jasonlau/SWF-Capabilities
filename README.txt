@@ -121,6 +121,13 @@ capabilities.unset_key()
 - Deletes the random local SharedObject.
 Returns false if this fails for any reason.
 
+capabilities.valid_key(key:String, callback:Object)
+- Compares key:String with the real key cookie value and triggers
+a custom callback function if the key is valid. If no callback
+function is specified,
+Returns false if the key is invalid.
+
+
 ==================================================================
 Example
 ==================================================================
@@ -138,6 +145,9 @@ Example
     
     // Get the key value
     var k = capabilities.get_key();
+
+    // Verify a key matches the user key and trigger a callback function
+    var verify_key = capabilities.valid_key(k, 'myFunction()'); 
     
     // make an array containing key value and serverString
     var a = [ k, cp ];
@@ -151,8 +161,19 @@ Example
     jQuery.each(cp, function(key, value) {
         c_data += key + '=' + value + '&';
     });
-    alert(c_data);
+
+    // alert(c_data);
+    
+    
 });
+
+// Below is the custom callback for capabilities.valid_key(key:String, callback:Object) - 
+// Notice it is located outside of jQuery code. Otherwise, it would throw an error.
+
+function myFunction(){
+  alert('Valid Key!\nThis is my custom callback function!');
+}
+
 </script>
 <!-- BEGIN -->
 <script type="text/javascript">
