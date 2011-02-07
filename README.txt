@@ -147,7 +147,7 @@ Example
     var k = capabilities.get_key();
 
     // Verify a key matches the user key and trigger a callback function
-    var verify_key = capabilities.valid_key(k, 'myFunction()'); 
+    var verify_key = capabilities.valid_key(k, myFunction()); 
     
     // make an array containing key value and serverString
     var a = [ k, cp ];
